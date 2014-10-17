@@ -73,37 +73,45 @@ console.log(arrayValue);
 
 
 // Chapter 4:  A LIST
-// NEEDS WORK
 
-function arrayToList(array, i) {
-  var list = {};
-  var i = i || 0;
-  if (i < array.length) {
-    list["value"] = array[i];
-    list["rest"] = arrayToList(array, i+1);
+function arrayToList(array, list) {
+  var list = {} || list
+  if (array.length > 0) {
+    list["value"] = array.shift();
+	list["rest"] = arrayToList(array);
     return list;
   }
-  else
+  else {
     return null;
+  }
 }
 
 function listToArray(list) {
   var array = [];
-  array.push(list.value);
-  if (list.rest)
-    listToArray(list.rest, array)
+  while ("value" in list) {
+	array.push(list.value);
+    if (!list.rest)
+      break;
+    else
+      list = list.rest;
+  }
   return array;
 }
 
 function prepend(value, list) {
-  return list;
+    list = {value: value, rest: list};
+	return list;
 }
 
 function nth(list, position) {
-  return item;
+  var array = listToArray(list);
+  if (position <= array.length)
+    return array[position];
+  else
+    return "No item at this index";
 }
 
-console.log(arrayToList([10, 20, 30]));
+console.log(arrayToList([10, 20]));
 // → {value: 10, rest: {value: 20, rest: null}}
 console.log(listToArray(arrayToList([10, 20, 30])));
 // → [10, 20, 30]
