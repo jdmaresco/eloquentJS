@@ -64,6 +64,7 @@ function reverseArrayInPlace(arr) {
   }
 }
 
+logHeader("Reversing arrays and stuff");
 console.log(reverseArray(["A", "B", "C"]));
 // → ["C", "B", "A"];
 var arrayValue = [1, 2, 3, 4, 5];
@@ -111,6 +112,7 @@ function nth(list, position) {
     return "No item at this index";
 }
 
+logHeader("Converting lists to arrays and back")
 console.log(arrayToList([10, 20]));
 // → {value: 10, rest: {value: 20, rest: null}}
 console.log(listToArray(arrayToList([10, 20, 30])));
@@ -119,3 +121,28 @@ console.log(prepend(10, prepend(20, null)));
 // → {value: 10, rest: {value: 20, rest: null}}
 console.log(nth(arrayToList([10, 20, 30]), 1));
 // → 20
+
+// Chapter 4:  Deep Comparison
+
+function deepEqual(o1, o2) {
+  if (((typeof o1 === 'object') && !!o1) && ((typeof o2 === 'object') && !!o2)) {
+    if (!(Object.getOwnPropertyNames(o1).length == Object.getOwnPropertyNames(o2).length))
+      return false;
+    for (var i in o1) {
+      if (!((i in o2) && deepEqual(o1[i], o2[i])))
+        return false
+    }
+    return true
+  } else {
+    return o1 === o2;
+  }
+}
+
+logHeader("Testing deep comparison function");
+var obj = {here: {is: "an"}, object: 2};
+console.log(deepEqual(obj, obj));
+// → true
+console.log(deepEqual(obj, {here: 1, object: 2}));
+// → false
+console.log(deepEqual(obj, {here: {is: "an"}, object: 2}));
+// → true
