@@ -109,16 +109,13 @@ function prepend(value, list) {
 }
 
 function nth(list, position) {
-  var i=0;
-  for (var node = list; node; node = node.rest) {
-    if (i === position) {
-      return node.value;
-    } else {
-      i++
-    }
-  }
-
-  return "No item at this index";
+  if (list) {
+    if (position==0)
+      return list.value;
+    else
+      return nth(list.rest, position-1);
+  } else
+    return "No item at this index";
 }
 
 logHeader("Converting lists to arrays and back")
