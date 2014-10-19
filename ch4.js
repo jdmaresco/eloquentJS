@@ -75,7 +75,7 @@ console.log(arrayValue);
 
 // Chapter 4:  A LIST
 
-function arrayToList(array, list) {
+/*function arrayToList(array, list) {
   var list = {} || list
   if (array.length > 0) {
     list["value"] = array.shift();
@@ -85,16 +85,20 @@ function arrayToList(array, list) {
   else {
     return null;
   }
+}*/
+
+function arrayToList(array) {
+  var list = null;
+  for (var i=0; array.length; i++) {
+    list = {value: array.pop(), rest: list}
+  }
+  return list;
 }
 
 function listToArray(list) {
   var array = [];
-  while ("value" in list) {
-	array.push(list.value);
-    if (!list.rest)
-      break;
-    else
-      list = list.rest;
+  for (var node = list; node; node = node.rest) {
+    array.push(node.value);
   }
   return array;
 }
@@ -105,11 +109,16 @@ function prepend(value, list) {
 }
 
 function nth(list, position) {
-  var array = listToArray(list);
-  if (position <= array.length)
-    return array[position];
-  else
-    return "No item at this index";
+  var i=0;
+  for (var node = list; node; node = node.rest) {
+    if (i === position) {
+      return node.value;
+    } else {
+      i++
+    }
+  }
+
+  return "No item at this index";
 }
 
 logHeader("Converting lists to arrays and back")
