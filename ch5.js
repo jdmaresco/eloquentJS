@@ -166,14 +166,15 @@ console.log(average(ageDiffs));
 // Chapter 5: EVERY AND THEN SOME
 
 function every(array, fn) {
-  var bool = true;
   for (var i = 0; i < array.length; i++) {
 
-    // IF ALL PREVIOUS ELEMENTS HAVE RETURNED TRUE,
-    // EVALUATE FUNCTION AGAIN WITH NEXT ELEMENT AS ARG
-    bool = bool && fn(array[i]);
+    // IF FUNCTION RETURNS FALSE, RETURN FALSE
+    if (!fn(array[i]))
+      return false;
   }
-  return bool;
+
+  // IF NO ELEMENT EVALUATED TO FALSE, RETURN TRUE
+  return true;
 }
 
 function some(array, fn) {
